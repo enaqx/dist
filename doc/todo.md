@@ -3,3 +3,4 @@
 * Add more shared data structures and optimize them
 * Documentation and website
 * Implement Vector Clock
+* Create nodes on external hosts
