@@ -11,10 +11,16 @@ const onMessage = () => console.log(msg);
 
 const timeout = 6000;
 
-const node1 = Dist.createNode({ onCreate: onCreate1, onMessage, timeout });
-const node2 = Dist.createNode({ onCreate: onCreate2, onMessage, timeout });
-const node3 = Dist.createNode({ onCreate: onCreate3, onMessage, timeout });
+const dist = new Dist();
+const node1 = dist.createNode({ onCreate: onCreate1, onMessage, timeout });
+const node2 = dist.createNode({ onCreate: onCreate2, onMessage, timeout });
+const node3 = dist.createNode({ onCreate: onCreate3, onMessage, timeout });
 
 node1.send('Send message to #1');
 node2.send('Send message to #2');
 node3.send('Send message to #3');
+
+setTimeout(() => {
+  dist.destroyNode(node1)
+  console.log(dist.nodes);
+}, 2000);
