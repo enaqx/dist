@@ -1,6 +1,7 @@
 * Update tests using mocha and chai.
 * Add linter and linter rules.
-* Add more shared data structures and optimize them.
+* Add continuous integration.
+* Add more distributed data structures and optimize them.
 * Documentation and website.
 * Implement Vector Clock.
 * Create nodes on external hosts.
