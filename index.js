@@ -24,3 +24,5 @@ setTimeout(() => {
   dist.destroyNode(node1)
   console.log(dist.nodes);
 }, 2000);
+
+export default Dist;
