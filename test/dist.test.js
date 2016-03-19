@@ -39,13 +39,13 @@ describe('Dist', () => {
     });
     it('should create new Node with with specified timeout', (done) => {
       const dist = new Dist();
-      const node = dist.createNode({  timeout: 250 });
+      const node = dist.createNode({  timeout: 500 });
       assert.isObject(node);
       assert.isTrue(node.isConnected());
       setTimeout(() => {
         assert.isFalse(node.isConnected());
         done();
-      }, 500);
+      }, 1000);
     });
   });
 });
