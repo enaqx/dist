@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register -t 10000"
   },
   "author": "Nick Raienko <enaqxx@gmail.com>",
   "license": "ISC",
