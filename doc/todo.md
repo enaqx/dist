@@ -1,6 +1,8 @@
 * Update tests using mocha and chai.
 * Add linter and linter rules.
 * Add continuous integration.
+* Add coverage using coveralls
+* Push to npm and add badge
 * Add more distributed data structures and optimize them.
 * Documentation and website.
 * Implement Vector Clock.
