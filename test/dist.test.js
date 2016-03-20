@@ -21,6 +21,7 @@ describe('Dist', () => {
       assert.isObject(node);
       assert.deepEqual(dist.nodes, [ node.id ]);
     });
+
     it('should create new nodes with custom id', () => {
       const dist = new Dist();
       const node1 = dist.createNode({ id: '1' });
@@ -32,11 +33,13 @@ describe('Dist', () => {
         [ node1.id, node2.id, node3.id ].sort()
       );
     });
+
     it('should throw error on creating nodes with same custom id', () => {
       const dist = new Dist();
       const node1 = dist.createNode({ id: '123' });
       assert.throws(() => dist.createNode({ id: '123' }));
     });
+
     it('should create new Node with with specified timeout', (done) => {
       const dist = new Dist();
       const node = dist.createNode({  timeout: 500 });
@@ -46,6 +49,15 @@ describe('Dist', () => {
         assert.isFalse(node.isConnected());
         done();
       }, 1000);
+    });
+
+    it('should create new Node with onCreate callback', () => {
+      const dist = new Dist();
+      const onCreateCb = () => {
+        setState({someValue: 'Hello, World!'});
+      }
+      const node = dist.createNode({ onCreate: onCreateCb });
+      assert.isObject(node);
     });
   });
 });
