@@ -42,7 +42,7 @@ describe('Dist', () => {
 
     it('should create new Node with with specified timeout', (done) => {
       const dist = new Dist();
-      const node = dist.createNode({  timeout: 500 });
+      const node = dist.createNode({ timeout: 500 });
       assert.isObject(node);
       assert.isTrue(node.isConnected());
       setTimeout(() => {
@@ -58,6 +58,27 @@ describe('Dist', () => {
       }
       const node = dist.createNode({ onCreate: onCreateCb });
       assert.isObject(node);
+    });
+  });
+
+  describe('#createNodes([opts])', () => {
+    it('should create list of node when passed number as argument', () => {
+      const amountOfNodes = 5;
+      const dist = new Dist();
+      const nodes = dist.createNodes(amountOfNodes);
+      assert.isArray(nodes);
+      for ( let i = 0; i < amountOfNodes; i++ ) assert.isObject(nodes[i]);
+      assert.deepEqual(dist.nodes.sort(), nodes.map(node => node.id).sort());
+    });
+
+    it('should create list of node when passed array of node opts', () => {
+      const dist = new Dist();
+      const nodes = dist.createNodes([ { id: '1' }, { id: '2' }, { id: '3' } ]);
+      assert.isArray(nodes);
+      assert.deepEqual(
+        dist.nodes.sort(),
+        [ nodes[0].id, nodes[1].id, nodes[2].id ].sort()
+      );
     });
   });
 });
