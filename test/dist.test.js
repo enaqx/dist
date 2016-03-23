@@ -36,7 +36,7 @@ describe('Dist', () => {
 
     it('should throw error on creating nodes with same custom id', () => {
       const dist = new Dist();
-      const node1 = dist.createNode({ id: '123' });
+      const node = dist.createNode({ id: '123' });
       assert.throws(() => dist.createNode({ id: '123' }));
     });
 
@@ -94,6 +94,28 @@ describe('Dist', () => {
         assert.isFalse(node.isConnected());
         done();
       }, 1000);
+    });
+  });
+
+  describe('#destroyNodes(nodes)', () => {
+    it('should destroy nodes and remove them from nodes list', done => {
+      const amountOfNodes = 5;
+      const dist = new Dist();
+      const nodes = dist.createNodes(amountOfNodes);
+      assert.deepEqual(dist.nodes.sort(), nodes.map(node => node.id).sort());
+      dist.destroyNodes(nodes);
+      assert.deepEqual(dist.nodes, []);
+      setTimeout(() => {
+        nodes.map(node => assert.isFalse(node.isConnected()));
+        done();
+      }, 1000);
+    });
+
+    it('should throw error on passing nonarray argument', () => {
+      const dist = new Dist();
+      assert.throws(() => dist.destroyNodes({}));
+      assert.throws(() => dist.destroyNodes(1));
+      assert.throws(() => dist.destroyNodes('Hello, World!'));
     });
   });
 });
