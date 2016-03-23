@@ -40,7 +40,7 @@ describe('Dist', () => {
       assert.throws(() => dist.createNode({ id: '123' }));
     });
 
-    it('should create new Node with with specified timeout', (done) => {
+    it('should create new Node with with specified timeout', done => {
       const dist = new Dist();
       const node = dist.createNode({ timeout: 500 });
       assert.isObject(node);
@@ -51,13 +51,14 @@ describe('Dist', () => {
       }, 1000);
     });
 
-    it('should create new Node with onCreate callback', () => {
+    it('should create new Node with onCreate callback', done => {
       const dist = new Dist();
-      const onCreateCb = () => {
-        setState({someValue: 'Hello, World!'});
-      }
+      const onCreateCb = () => setState({ someValue: 'Hello, World!' });
       const node = dist.createNode({ onCreate: onCreateCb });
-      assert.isObject(node);
+      node.getState('someValue').then(res => {
+        assert.deepEqual(res, { someValue: 'Hello, World!' });
+        done();
+      });
     });
   });
 
@@ -79,6 +80,20 @@ describe('Dist', () => {
         dist.nodes.sort(),
         [ nodes[0].id, nodes[1].id, nodes[2].id ].sort()
       );
+    });
+  });
+
+  describe('#destroyNode(node)', () => {
+    it('should destroy node and remove it from nodes list', done => {
+      const dist = new Dist();
+      const node = dist.createNode();
+      assert.deepEqual(dist.nodes, [ node.id ]);
+      dist.destroyNode(node);
+      assert.deepEqual(dist.nodes, []);
+      setTimeout(() => {
+        assert.isFalse(node.isConnected());
+        done();
+      }, 1000);
     });
   });
 });

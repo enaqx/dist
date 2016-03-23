@@ -20,8 +20,21 @@ describe('Node', () => {
     });
   });
 
+  describe('#destroy()', () => {
+    it('should destroy node', done => {
+      const dist = new Dist();
+      const node = dist.createNode();
+      assert.isTrue(node.isConnected());
+      node.destroy();
+      setTimeout(() => {
+        assert.isFalse(node.isConnected());
+        done();
+      }, 1000);
+    });
+  });
+
   describe('#isConnected()', () => {
-    it('should check if Node is connected', () => {
+    it('should check if node is connected', () => {
       const dist = new Dist();
       const node = dist.createNode({ timeout: 250 });
       assert.isObject(node);
