@@ -23,8 +23,21 @@ describe('Node', () => {
       const node2 = dist.createNode();
       const node3 = dist.createNode();
       assert.deepEqual(
-        dist.nodes.sort(),
+        dist.nodes.map(node => node.id).sort(),
         [ node1.id, node2.id, node3.id ].sort()
+      );
+    });
+  });
+
+  describe('#pid', () => {
+    it('should return node process id', () => {
+      const dist = new Dist();
+      const node1 = dist.createNode();
+      const node2 = dist.createNode();
+      const node3 = dist.createNode();
+      assert.deepEqual(
+        dist.nodes.map(node => node.pid).sort(),
+        [ node1.pid, node2.pid, node3.pid ].sort()
       );
     });
   });

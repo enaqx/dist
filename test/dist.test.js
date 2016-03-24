@@ -19,7 +19,7 @@ describe('Dist', () => {
       const dist = new Dist();
       const node = dist.createNode();
       assert.isObject(node);
-      assert.deepEqual(dist.nodes, [ node.id ]);
+      assert.deepEqual(dist.nodes.map(node => node.id).sort(), [ node.id ]);
     });
 
     it('should create new nodes with custom id', () => {
@@ -29,7 +29,7 @@ describe('Dist', () => {
       const node3 = dist.createNode({ id: '3' });
       assert.isObject(node1, node2, node3);
       assert.deepEqual(
-        dist.nodes.sort(),
+        dist.nodes.map(node => node.id).sort(),
         [ node1.id, node2.id, node3.id ].sort()
       );
     });
@@ -69,7 +69,10 @@ describe('Dist', () => {
       const nodes = dist.createNodes(amountOfNodes);
       assert.isArray(nodes);
       for ( let i = 0; i < amountOfNodes; i++ ) assert.isObject(nodes[i]);
-      assert.deepEqual(dist.nodes.sort(), nodes.map(node => node.id).sort());
+      assert.deepEqual(
+        dist.nodes.map(node => node.id).sort(),
+        nodes.map(node => node.id).sort()
+      );
     });
 
     it('should create list of node when passed array of node opts', () => {
@@ -77,7 +80,7 @@ describe('Dist', () => {
       const nodes = dist.createNodes([ { id: '1' }, { id: '2' }, { id: '3' } ]);
       assert.isArray(nodes);
       assert.deepEqual(
-        dist.nodes.sort(),
+        dist.nodes.map(node => node.id).sort(),
         [ nodes[0].id, nodes[1].id, nodes[2].id ].sort()
       );
     });
@@ -87,7 +90,7 @@ describe('Dist', () => {
     it('should destroy node and remove it from nodes list', done => {
       const dist = new Dist();
       const node = dist.createNode();
-      assert.deepEqual(dist.nodes, [ node.id ]);
+      assert.deepEqual(dist.nodes.map(node => node.id), [ node.id ]);
       dist.destroyNode(node);
       assert.deepEqual(dist.nodes, []);
       setTimeout(() => {
@@ -102,7 +105,10 @@ describe('Dist', () => {
       const amountOfNodes = 5;
       const dist = new Dist();
       const nodes = dist.createNodes(amountOfNodes);
-      assert.deepEqual(dist.nodes.sort(), nodes.map(node => node.id).sort());
+      assert.deepEqual(
+        dist.nodes.map(node => node.id).sort(),
+        nodes.map(node => node.id).sort()
+      );
       dist.destroyNodes(nodes);
       assert.deepEqual(dist.nodes, []);
       setTimeout(() => {
@@ -118,4 +124,13 @@ describe('Dist', () => {
       assert.throws(() => dist.destroyNodes('Hello, World!'));
     });
   });
+
+  describe('#getNode(nodeId)', () => {
+    it('should return node by id', () => {
+      const idList = [ { id: '1' }, { id: '2' }, { id: '3' } ];
+      const dist = new Dist();
+      const nodes = dist.createNodes(idList);
+      idList.forEach((idx) => assert.equal(idx.id, dist.getNode(idx.id).id));
+    })
+  })
 });
