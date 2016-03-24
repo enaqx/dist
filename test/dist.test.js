@@ -130,7 +130,21 @@ describe('Dist', () => {
       const idList = [ { id: '1' }, { id: '2' }, { id: '3' } ];
       const dist = new Dist();
       const nodes = dist.createNodes(idList);
-      idList.forEach((idx) => assert.equal(idx.id, dist.getNode(idx.id).id));
+      idList.forEach(idx => assert.equal(idx.id, dist.getNode(idx.id).id));
     })
-  })
+  });
+
+  describe('#getNodes(nodeIdList)', () => {
+    it('should return node by id', () => {
+      const idList = [ { id: '1' }, { id: '2' }, { id: '3' } ];
+      const dist = new Dist();
+      const nodes = dist.createNodes(idList);
+      assert.deepEqual(
+        idList.slice(0, 2),
+        dist.getNodes(idList.slice(0, 2)
+            .map(idx => idx.id))
+            .map(node => { return { id: node.id } })
+      );
+    })
+  });
 });
