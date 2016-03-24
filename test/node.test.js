@@ -13,6 +13,15 @@ describe('Node', () => {
       const node2 = dist.createNode();
       const node3 = dist.createNode();
       assert.isObject(node1, node2, node3);
+    });
+  });
+
+  describe('#id', () => {
+    it('should return node id', () => {
+      const dist = new Dist();
+      const node1 = dist.createNode();
+      const node2 = dist.createNode();
+      const node3 = dist.createNode();
       assert.deepEqual(
         dist.nodes.sort(),
         [ node1.id, node2.id, node3.id ].sort()
