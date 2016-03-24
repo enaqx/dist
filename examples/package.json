@@ -1,9 +1,0 @@
-{
-  "name": "dist.js",
-  "version": "0.0.1",
-  "description": "Distributed Algorithms in JavaScript",
-  "main": "index.js",
-  "scripts": {},
-  "author": "Nick Raienko <enaqxx@gmail.com>",
-  "license": "ISC"
-}
