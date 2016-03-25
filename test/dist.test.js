@@ -60,6 +60,19 @@ describe('Dist', () => {
         done();
       });
     });
+
+    it('should create new Node with onDestroy callback', done => {
+      const dist = new Dist();
+      const onDestroyCb = () => setState({ lastMessage: 'They killed me :(' });
+      const node = dist.createNode({ onDestroy: onDestroyCb });
+      dist.destroyNode(node).then(res => {
+        setTimeout(() => {
+          assert.equal(node.state, 'destroyed');
+          assert.isFalse(node.isConnected());
+          done();
+        }, 1000);
+      });
+    });
   });
 
   describe('#createNodes([opts])', () => {
