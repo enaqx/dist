@@ -34,6 +34,16 @@ describe('Dist', () => {
       );
     });
 
+    it('should throw error on passing non-string as node id', () => {
+      const dist = new Dist();
+      assert.throws(() => dist.createNode({ id: true }));
+      assert.throws(() => dist.createNode({ id: 42 }));
+      assert.doesNotThrow(() => dist.createNode({ id: '42' }));
+      assert.throws(() => dist.createNode({ id: {} }));
+      assert.throws(() => dist.createNode({ id: [] }));
+      assert.throws(() => dist.createNode({ id: () => {} }));
+    });
+
     it('should throw error on creating nodes with same custom id', () => {
       const dist = new Dist();
       const node = dist.createNode({ id: '123' });
