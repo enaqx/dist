@@ -19,7 +19,7 @@ describe('Dist', () => {
       const dist = new Dist();
       const node = dist.createNode();
       assert.isObject(node);
-      assert.deepEqual(dist.nodes.map(node => node.id).sort(), [ node.id ]);
+      assert.deepEqual(dist.nodes.map(node => node.id), [ node.id ]);
     });
 
     it('should create new nodes with custom id', () => {
